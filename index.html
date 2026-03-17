@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#ef4444">
+    <title>Semakan ID DELIMa</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        @keyframes float-slow {
+            0%, 100% { transform: translateY(0px) rotate(-10deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+        }
+        @keyframes float-fast {
+            0%, 100% { transform: translateY(0px) rotate(15deg); }
+            50% { transform: translateY(-15px) rotate(-15deg); }
+        }
+        @keyframes fly-across {
+            0% { transform: translateX(-10vw) translateY(40px) rotate(45deg); opacity: 0; }
+            10% { opacity: 0.4; }
+            90% { opacity: 0.4; }
+            100% { transform: translateX(100vw) translateY(-80px) rotate(45deg); opacity: 0; }
+        }
+        @keyframes pop-in {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .animate-float-slow { animation: float-slow 6s ease-in-out infinite; }
+        .animate-float-fast { animation: float-fast 4s ease-in-out infinite; }
+        .animate-fly { animation: fly-across 15s linear infinite; }
+        .animate-pop-in { animation: pop-in 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+    </style>
+</head>
+<body class="bg-rose-50 font-sans text-slate-800 pb-16 overflow-x-hidden selection:bg-yellow-300 selection:text-yellow-900 min-h-screen">
+
+    <!-- Bahagian Header (Pengepala) Tema Ceria Merah dengan Animasi -->
+    <header class="bg-gradient-to-br from-yellow-400 via-orange-500 to-red-600 text-white shadow-xl rounded-b-[3rem] pt-12 pb-28 relative overflow-hidden">
+        <!-- Hiasan Latar Belakang Geometri -->
+        <div class="absolute top-0 left-0 w-64 h-64 bg-white opacity-10 rounded-full -translate-x-1/2 -translate-y-1/2"></div>
+        <div class="absolute top-10 right-10 w-32 h-32 bg-yellow-300 opacity-20 rounded-full animate-pulse"></div>
+        
+        <!-- Ikon Terapung Bertemakan Sekolah (Floating Icons) -->
+        <div class="absolute top-8 left-[15%] opacity-30 text-white animate-float-slow hidden sm:block">
+            <i data-lucide="pencil" class="w-12 h-12"></i>
+        </div>
+        <div class="absolute top-16 right-[18%] opacity-30 text-white animate-float-fast hidden sm:block">
+            <i data-lucide="palette" class="w-14 h-14"></i>
+        </div>
+        <div class="absolute bottom-14 left-[8%] opacity-30 text-white animate-float-fast">
+            <i data-lucide="book-open" class="w-10 h-10"></i>
+        </div>
+        <div class="absolute top-6 left-[40%] opacity-20 text-white animate-float-slow">
+            <i data-lucide="cloud" class="w-20 h-20"></i>
+        </div>
+        
+        <!-- Bintang Berkelip -->
+        <div class="absolute top-24 left-10 opacity-40 text-yellow-200 animate-pulse">
+            <i data-lucide="star" class="w-8 h-8 fill-current"></i>
+        </div>
+        <div class="absolute top-12 right-20 opacity-40 text-yellow-200 animate-pulse" style="animation-delay: 1s;">
+            <i data-lucide="star" class="w-10 h-10 fill-current"></i>
+        </div>
+
+        <!-- Roket Terbang Melintasi Skrin -->
+        <div class="absolute top-20 opacity-30 text-white animate-fly hidden md:block pointer-events-none">
+            <i data-lucide="rocket" class="w-16 h-16"></i>
+        </div>
+        
+        <div class="max-w-4xl mx-auto px-4 flex flex-col items-center text-center relative z-10">
+            <div class="bg-white p-5 rounded-full mb-6 shadow-[0_8px_30px_rgb(0,0,0,0.12)] transform transition-transform duration-300 hover:scale-110 hover:rotate-6 cursor-pointer border-4 border-yellow-300 relative group">
+                <!-- Kesan interaktif pada ikon sekolah utama bila di-hover -->
+                <div class="absolute -top-3 -right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-yellow-400">
+                    <i data-lucide="star" class="w-6 h-6 animate-[spin_3s_linear_infinite] fill-current"></i>
+                </div>
+                <i data-lucide="school" class="w-12 h-12 text-red-500"></i>
+            </div>
+            <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight mb-4 flex items-center justify-center drop-shadow-lg">
+                <i data-lucide="sparkles" class="w-8 h-8 mr-3 text-yellow-300 animate-pulse hidden sm:block"></i>
+                Semakan ID DELIMa
+                <i data-lucide="sparkles" class="w-8 h-8 ml-3 text-yellow-300 animate-pulse hidden sm:block"></i>
+            </h1>
+            <p class="text-rose-50 text-base sm:text-xl max-w-xl font-medium drop-shadow-md">
+                Sistem carian pantas dan ceria untuk murid & guru SK Simpang Empat! ✨
+            </p>
+        </div>
+    </header>
+
+    <!-- Bahagian Utama (Carian) -->
+    <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 -mt-20 relative z-20">
+        
+        <!-- Paparan Animasi Loading -->
+        <div id="loading-view" class="bg-white rounded-[2.5rem] shadow-2xl p-10 text-center border-4 border-yellow-300 relative z-20 flex flex-col items-center justify-center min-h-[250px]">
+            <div class="w-16 h-16 border-8 border-rose-100 border-t-orange-500 rounded-full animate-spin mx-auto mb-6 shadow-sm"></div>
+            <h2 class="text-2xl font-bold text-slate-800 mb-2">Menyemak Pangkalan Data...</h2>
+            <p class="text-slate-500 font-medium">Sila tunggu sebentar, sistem sedang memuat turun senarai nama dari Google Sheets. 🚀</p>
+        </div>
+
+        <!-- Paparan Kotak Carian Utama (Sembunyi by default) -->
+        <div id="search-view" class="hidden bg-white rounded-[2.5rem] shadow-2xl p-6 sm:p-10 border-4 border-white hover:border-rose-100 transition-colors duration-300">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+                
+                <!-- Input Kelas (Langkah 1) -->
+                <div class="flex flex-col space-y-3 relative group z-20">
+                    <label for="kelas" class="text-base font-bold text-slate-700 flex items-center ml-2">
+                        <span class="bg-red-500 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs mr-2 shadow-sm">1</span>
+                        Pilih Kelas
+                    </label>
+                    <div class="relative group">
+                        <div class="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none transition-transform duration-300 group-focus-within:scale-110">
+                            <i data-lucide="school" class="h-6 w-6 text-red-500"></i>
+                        </div>
+                        <select id="kelas" class="block w-full pl-14 pr-10 py-4 text-lg border-2 border-slate-200 focus:outline-none focus:ring-4 focus:ring-red-200 focus:border-red-400 rounded-full transition-all duration-300 bg-slate-50 focus:bg-white focus:scale-[1.02] shadow-inner font-bold text-slate-700 cursor-pointer appearance-none">
+                            <option value="" disabled selected class="font-normal text-slate-400">-- Sila Pilih Kelas --</option>
+                            <!-- Pilihan kelas akan dimasukkan di sini oleh JS -->
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Input Nama (Langkah 2) -->
+                <div id="container-langkah-2" class="flex flex-col space-y-3 transition-all duration-500 opacity-50 grayscale pointer-events-none">
+                    <label for="nama" class="text-base font-bold text-slate-700 flex items-center ml-2">
+                        <span id="label-langkah-2-num" class="bg-slate-300 text-slate-500 w-6 h-6 rounded-full flex items-center justify-center text-xs mr-2 shadow-sm transition-colors">2</span>
+                        Pilih Nama Murid
+                    </label>
+                    <div class="relative group">
+                        <div class="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none transition-transform duration-300 group-focus-within:scale-110">
+                            <i data-lucide="user" id="icon-langkah-2" class="h-6 w-6 text-slate-400"></i>
+                        </div>
+                        <select id="nama" disabled class="block w-full pl-14 pr-10 py-4 text-lg border-2 border-slate-200 bg-slate-100 text-slate-400 rounded-full transition-all duration-300 shadow-inner font-bold appearance-none cursor-pointer">
+                            <option value="" disabled selected class="font-normal text-slate-400">Pilih kelas dahulu...</option>
+                            <!-- Pilihan nama akan dimasukkan di sini oleh JS -->
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bahagian Hasil Carian -->
+        <div id="result-area" class="mt-10 hidden">
+            
+            <!-- Belum Dicari -->
+            <div id="hasil-awal" class="text-center py-16 px-4">
+                <div class="inline-flex items-center justify-center w-24 h-24 rounded-full bg-yellow-100 mb-6 shadow-lg animate-bounce">
+                    <i data-lucide="smile" class="h-12 w-12 text-yellow-500"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-slate-800 mb-2">Mari Mulakan!</h3>
+                <p class="text-base text-slate-500 max-w-md mx-auto">
+                    Pilih <strong class="text-red-500">Kelas</strong> pada Langkah 1, kemudian pilih <strong class="text-orange-500">Nama Anda</strong> pada Langkah 2. 🚀
+                </p>
+            </div>
+
+            <!-- Hasil Dijumpai -->
+            <div id="hasil-dijumpai" class="space-y-6 hidden">
+                <div class="flex items-center px-2">
+                    <i data-lucide="star" class="w-6 h-6 text-yellow-400 mr-2 fill-current"></i>
+                    <h2 class="text-lg font-bold text-slate-700">
+                        Yay! Kami jumpa <span id="jumlah-jumpa">0</span> rakan
+                    </h2>
+                </div>
+                
+                <div id="senarai-kad-hasil" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Kad Hasil akan dimasukkan di sini oleh JS -->
+                </div>
+            </div>
+
+            <!-- Hasil Tidak Dijumpai -->
+            <div id="hasil-kosong" class="hidden text-center py-16 px-4 bg-white rounded-[2.5rem] border-4 border-slate-100 border-dashed transform transition-all duration-300 hover:scale-[1.01]">
+                <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-red-50 mb-4 shadow-inner">
+                    <i data-lucide="alert-circle" class="h-10 w-10 text-red-500"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-slate-800 mb-2">Alamak, Tak Jumpa!</h3>
+                <p class="text-base text-slate-500 max-w-sm mx-auto">
+                    Sistem tidak menemui ID tersebut. Cuba semak kembali carian anda. Jangan putus asa! 💪
+                </p>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Modal Popup Profil Murid (Sembunyi by default) -->
+    <div id="modal-murid" class="fixed inset-0 z-50 items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm hidden" onclick="tutupModal()">
+        <div class="bg-white rounded-[3rem] p-6 sm:p-10 max-w-lg w-full shadow-2xl relative animate-pop-in border-4 border-yellow-300 mx-auto max-h-[95vh] overflow-y-auto" onclick="event.stopPropagation()">
+            <!-- Butang Tutup (X) -->
+            <button onclick="tutupModal()" class="absolute top-4 right-4 p-2 bg-rose-100 text-rose-600 rounded-full hover:bg-rose-200 hover:text-rose-800 transition-colors z-10">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+
+            <div class="flex flex-col items-center text-center mt-2">
+                <!-- Ikon Avatar Ceria -->
+                <div class="w-24 h-24 bg-gradient-to-br from-yellow-300 to-orange-400 rounded-full flex items-center justify-center shadow-lg mb-6 border-4 border-white ring-4 ring-orange-100">
+                    <i data-lucide="user" class="w-12 h-12 text-white"></i>
+                </div>
+                
+                <!-- Nama Murid -->
+                <h2 id="modal-nama" class="text-3xl font-extrabold text-slate-800 mb-2 leading-tight"></h2>
+                
+                <!-- Tag Kelas -->
+                <div class="inline-flex items-center px-4 py-2 rounded-full bg-orange-100 text-orange-700 text-base font-bold mb-8">
+                    <i data-lucide="book-open" class="w-5 h-5 mr-2"></i>
+                    Kelas: <span id="modal-kelas" class="ml-1"></span>
+                </div>
+
+                <!-- Paparan ID DELIMa -->
+                <div class="w-full bg-rose-50 rounded-2xl p-6 border-2 border-dashed border-rose-200 mb-6">
+                    <p class="text-sm font-bold text-rose-400 uppercase tracking-wider mb-2">ID DELIMa Rasmi</p>
+                    <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+                        <span id="modal-id" class="text-xl sm:text-2xl font-mono font-bold text-rose-700 break-all"></span>
+                    </div>
+                </div>
+
+                <!-- Butang Salin Lebar Penuh -->
+                <button id="modal-btn-salin" class="w-full py-4 rounded-2xl flex items-center justify-center text-lg font-bold transition-all duration-300 hover:scale-105 active:scale-95 shadow-xl bg-gradient-to-r from-red-500 to-orange-500 text-white shadow-red-200/50 hover:shadow-red-300">
+                    <i data-lucide="copy" class="w-6 h-6 mr-2 btn-icon"></i>
+                    <span class="btn-text">Salin ID DELIMa</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bahagian Footer -->
+    <footer class="mt-16 text-center text-sm font-medium text-slate-400 pb-4">
+        <p>© <span id="tahun-semasa"></span> Sekolah Kebangsaan Simpang Empat.</p>
+        <p class="mt-2 flex items-center justify-center">
+            Dihasilkan dengan <i data-lucide="smile" class="w-4 h-4 text-rose-400 mx-1"></i> untuk kegunaan warga sekolah.
+        </p>
+    </footer>
+
+    <!-- Logik Sistem (Menggantikan React) -->
+    <script>
+        // Init Icons
+        lucide.createIcons();
+        document.getElementById('tahun-semasa').textContent = new Date().getFullYear();
+
+        // Variabel Global (State)
+        const API_URL = "https://script.google.com/macros/s/AKfycbyhsGEvTO0zByVZ54xacPxnGii1A_QI6vlddXVTqQ1r_PleaIsJpMm0DPvZXwW2rx4_/exec";
+        let pangkalanDataMurid = [];
+        let muridTerpilih = null;
+
+        // Fetch Data dari Google Sheets
+        document.addEventListener("DOMContentLoaded", () => {
+            fetch(API_URL)
+                .then(response => response.json())
+                .then(data => {
+                    // Tukar id_murid kepada string untuk mengelakkan ralat
+                    pangkalanDataMurid = data.map(item => ({
+                        ...item,
+                        id_murid: String(item.id_murid)
+                    }));
+                    
+                    // Ekstrak senarai kelas unik
+                    const senaraiKelasUnik = [...new Set(pangkalanDataMurid.map(item => item.kelas))].filter(Boolean).sort();
+                    
+                    // Hilangkan loading, paparkan borang
+                    document.getElementById('loading-view').classList.add('hidden');
+                    document.getElementById('search-view').classList.remove('hidden');
+                    document.getElementById('result-area').classList.remove('hidden');
+                    
+                    // Masukkan pilihan ke dalam Select Kelas
+                    const selectKelas = document.getElementById('kelas');
+                    senaraiKelasUnik.forEach(kelas => {
+                        const option = document.createElement('option');
+                        option.value = kelas;
+                        option.textContent = kelas;
+                        option.className = "font-medium text-slate-800";
+                        selectKelas.appendChild(option);
+                    });
+                })
+                .catch(error => {
+                    console.error("Gagal menarik data:", error);
+                    document.getElementById('loading-view').classList.add('hidden');
+                    alert("Maaf, terdapat masalah menyambung ke pangkalan data Google Sheets. Sila muat semula (refresh) halaman.");
+                });
+        });
+
+        // Logik apabila kelas ditukar
+        document.getElementById('kelas').addEventListener('change', (e) => {
+            const kelasDipilih = e.target.value;
+            const selectNama = document.getElementById('nama');
+            const containerL2 = document.getElementById('container-langkah-2');
+            const labelL2Num = document.getElementById('label-langkah-2-num');
+            const iconL2 = document.getElementById('icon-langkah-2');
+
+            // Aktifkan ruangan Nama
+            containerL2.classList.remove('opacity-50', 'grayscale', 'pointer-events-none');
+            labelL2Num.classList.replace('bg-slate-300', 'bg-orange-500');
+            labelL2Num.classList.replace('text-slate-500', 'text-white');
+            iconL2.classList.replace('text-slate-400', 'text-orange-500');
+            
+            selectNama.disabled = false;
+            selectNama.classList.replace('bg-slate-100', 'bg-slate-50');
+            selectNama.classList.remove('text-slate-400');
+            selectNama.classList.add('text-slate-700', 'focus:ring-4', 'focus:ring-orange-200', 'focus:border-orange-400', 'focus:bg-white');
+
+            // Reset senarai nama dan hasil carian
+            selectNama.innerHTML = '<option value="" disabled selected class="font-normal text-slate-400">-- Sila Pilih Nama --</option>';
+            document.getElementById('hasil-awal').classList.remove('hidden');
+            document.getElementById('hasil-dijumpai').classList.add('hidden');
+            document.getElementById('hasil-kosong').classList.add('hidden');
+
+            // Tapis data murid ikut kelas & urutkan
+            const senaraiNama = pangkalanDataMurid
+                .filter(m => m.kelas === kelasDipilih)
+                .sort((a, b) => a.nama.localeCompare(b.nama));
+            
+            // Masukkan nama ke dalam dropdown
+            senaraiNama.forEach(murid => {
+                const option = document.createElement('option');
+                option.value = murid.id_murid;
+                option.textContent = murid.nama;
+                option.className = "font-medium text-slate-800";
+                selectNama.appendChild(option);
+            });
+        });
+
+        // Logik apabila nama ditukar (Mulakan carian)
+        document.getElementById('nama').addEventListener('change', (e) => {
+            const idMuridDipilih = e.target.value;
+            const hasilCarian = pangkalanDataMurid.filter(m => m.id_murid === idMuridDipilih);
+
+            document.getElementById('hasil-awal').classList.add('hidden');
+
+            if (hasilCarian.length > 0) {
+                document.getElementById('hasil-kosong').classList.add('hidden');
+                document.getElementById('hasil-dijumpai').classList.remove('hidden');
+                document.getElementById('jumlah-jumpa').textContent = hasilCarian.length;
+
+                const senaraiKad = document.getElementById('senarai-kad-hasil');
+                senaraiKad.innerHTML = '';
+
+                // Bina kad hasil
+                hasilCarian.forEach((murid, index) => {
+                    const kadHTML = `
+                        <div onclick="bukaModal('${murid.id_murid}')" class="bg-white rounded-[2rem] shadow-md border-2 border-slate-100 border-b-8 border-b-rose-200 p-5 sm:p-6 transform transition-all duration-300 hover:scale-[1.03] hover:-translate-y-2 hover:shadow-2xl hover:border-b-yellow-400 group flex flex-col justify-between cursor-pointer">
+                            <div>
+                                <h3 class="text-lg sm:text-xl font-extrabold text-slate-800 line-clamp-2 group-hover:text-red-600 transition-colors">
+                                    ${murid.nama}
+                                </h3>
+                                <div class="inline-flex items-center px-3 py-1 rounded-full bg-orange-100 text-orange-700 text-xs sm:text-sm font-bold mt-3">
+                                    <i data-lucide="book-open" class="w-4 h-4 mr-2"></i>
+                                    Kelas: ${murid.kelas}
+                                </div>
+                            </div>
+                            
+                            <div class="mt-5 pt-4 sm:mt-6 sm:pt-5 border-t-2 border-dashed border-slate-100 flex items-center justify-between gap-2">
+                                <div class="flex items-center text-slate-800 overflow-hidden w-full">
+                                    <i data-lucide="mail" class="w-5 h-5 sm:w-6 sm:h-6 mr-2 text-rose-500 flex-shrink-0"></i>
+                                    <span class="text-xs sm:text-sm md:text-base font-mono font-bold bg-rose-50 px-3 py-2 rounded-xl text-rose-800 truncate border-2 border-rose-100 w-full" title="${murid.id_delima}">
+                                        ${murid.id_delima}
+                                    </span>
+                                </div>
+                                <button onclick="salinKePapanKeratan(event, '${murid.id_delima}', 'btn-kad-${index}')" id="btn-kad-${index}" class="p-3 sm:p-4 flex-shrink-0 rounded-2xl flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 shadow-lg bg-gradient-to-br from-yellow-400 to-red-500 text-white shadow-red-200/50 hover:shadow-red-300" title="Salin ID">
+                                    <i data-lucide="copy" class="w-5 h-5 sm:w-6 sm:h-6 icon-normal"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    senaraiKad.insertAdjacentHTML('beforeend', kadHTML);
+                });
+                // Initialize semula icon selepas modify DOM
+                lucide.createIcons();
+
+            } else {
+                document.getElementById('hasil-dijumpai').classList.add('hidden');
+                document.getElementById('hasil-kosong').classList.remove('hidden');
+            }
+        });
+
+        // Logik Fungsi Salin
+        function salinKePapanKeratan(event, teks, buttonId) {
+            if(event) event.stopPropagation(); // Halang modal terbuka bila klik butang salin di kad
+
+            const textArea = document.createElement("textarea");
+            textArea.value = teks;
+            document.body.appendChild(textArea);
+            textArea.select();
+            
+            try {
+                document.execCommand('copy');
+                
+                // Animasi Butang Berjaya Salin
+                const btn = document.getElementById(buttonId);
+                
+                // Simpan kelas asal untuk diubah semula nanti
+                const originalClasses = btn.className;
+                
+                if (buttonId === 'modal-btn-salin') {
+                    // Gaya khusus untuk butang dalam modal
+                    btn.className = "w-full py-4 rounded-2xl flex items-center justify-center text-lg font-bold transition-all duration-300 scale-105 shadow-xl bg-green-500 text-white shadow-green-200/50";
+                    btn.innerHTML = `<i data-lucide="check-circle" class="w-6 h-6 mr-2 animate-bounce"></i> <span class="btn-text">ID Berjaya Disalin!</span>`;
+                } else {
+                    // Gaya khusus untuk butang kecil di kad carian
+                    btn.className = "ml-3 p-4 flex-shrink-0 rounded-2xl flex items-center justify-center transition-all duration-300 scale-110 shadow-lg bg-green-500 text-white shadow-green-200";
+                    btn.innerHTML = `<i data-lucide="check-circle" class="w-7 h-7 animate-pulse"></i>`;
+                }
+                
+                lucide.createIcons();
+
+                // Kembalikan ke asal selepas 2 saat
+                setTimeout(() => {
+                    btn.className = originalClasses;
+                    if (buttonId === 'modal-btn-salin') {
+                        btn.innerHTML = `<i data-lucide="copy" class="w-6 h-6 mr-2 btn-icon"></i> <span class="btn-text">Salin ID DELIMa</span>`;
+                    } else {
+                        btn.innerHTML = `<i data-lucide="copy" class="w-7 h-7 icon-normal"></i>`;
+                    }
+                    lucide.createIcons();
+                }, 2000);
+
+            } catch (err) {
+                console.error('Gagal menyalin teks', err);
+            }
+            document.body.removeChild(textArea);
+        }
+
+        // Logik Modal
+        function bukaModal(id_murid) {
+            muridTerpilih = pangkalanDataMurid.find(m => m.id_murid === id_murid);
+            if(muridTerpilih) {
+                document.getElementById('modal-nama').textContent = muridTerpilih.nama;
+                document.getElementById('modal-kelas').textContent = muridTerpilih.kelas;
+                document.getElementById('modal-id').textContent = muridTerpilih.id_delima;
+                
+                // Kemaskini fungsi butang salin di dalam modal
+                const btnSalinModal = document.getElementById('modal-btn-salin');
+                btnSalinModal.onclick = (e) => salinKePapanKeratan(e, muridTerpilih.id_delima, 'modal-btn-salin');
+
+                document.getElementById('modal-murid').classList.remove('hidden');
+                document.getElementById('modal-murid').classList.add('flex');
+            }
+        }
+
+        function tutupModal() {
+            document.getElementById('modal-murid').classList.add('hidden');
+            document.getElementById('modal-murid').classList.remove('flex');
+            muridTerpilih = null;
+        }
+    </script>
+</body>
+</html>
